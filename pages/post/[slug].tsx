@@ -1,8 +1,14 @@
 import { sanityClient, urlFor } from "../../sanity";
 import Header from "../../components/Header";
 import { Post } from "../../typings";
+import {GetStaticProps} from "next";
 
-function Post() {
+interface Props {
+  post:Post;
+}
+
+function Post({post}: Props) {
+  console.log(post)
   return (
     <main>
       <Header />
@@ -35,9 +41,9 @@ export const getStaticPaths = async () => {
 };
 
 //you need to use getStaticProps with getStaticPaths
-export const getStaticProps: GetStaticProps = async ({params}) => {
-   
-    `*[_type == "post" && slug.current == $slug][0]{ 
+export const getStaticProps: GetStaticProps = async ({ params }) => {
+ const query = 
+  `*[_type == "post" && slug.current == $slug][0]{ 
         _id,
         _createdAt,
         title,
@@ -53,5 +59,21 @@ export const getStaticProps: GetStaticProps = async ({params}) => {
         mainImage,
         slug,
         body
-        }`
-}
+        }`;
+
+  const post = await sanityClient.fetch(query, {
+    slug: params?.slug,
+  });
+
+  if (!post) {
+    return {
+      notFound: true,
+    };
+  }
+
+  return {
+    props: {
+      post,
+    },
+  };
+};
