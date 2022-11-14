@@ -1,52 +1,63 @@
-import Head from 'next/head'
-import Link from 'next/link';
-import {sanityClient, urlFor} from "../sanity";
-import {Post} from "../typings";
+import Head from "next/head";
+import Header from "../components/Header";
+import Link from "next/link";
+import { sanityClient, urlFor } from  "../sanity.js";
+import { Post } from "../typings";
 
 interface Props {
   posts: [Post];
 }
 
-export default function Home({posts }: Props) {
- 
+export default function Home({ posts }: Props) {
+  console.log(posts);
   return (
     <div className="max-w-7xl mx-auto">
       <Head>
         <title>Medium Blog</title>
         <link rel="icon" href="/favicon.ico" />
       </Head>
-      <header className='flex justify-between p-5 max-w-7xl mx-auto'>
-        <div className="flex items-center space-x-5">
-            <Link href="/">
-                <img className="w-44  object-contain cursor-pointer" src="https://links.papareact.com/yvf" alt='' />
-            </Link>
-        
-        <div className="hidden md:inline-flex items-center space-x-5">
-            <h3>About</h3>
-            <h3>Contact</h3>
-            <h3 className='text-white bg-green-600 px-4 py-1 rounded-full'>Follow</h3>
-        </div>
-        </div>
-        <div className='flex items-center space-x-5 text-green-600'>
-            <h3>Sign-in</h3>
-            <h3 className='border px-4 py-1 rounded-full border-green-600'>Get started</h3>
-        </div>
-    </header>
+     <Header />
 
-    <div className='flex justify-between items-center bg-yellow-400 border-y border-black py-10 lg:py-0'>
-    <div className="px-10 space-y-5">
-        <h1 className="text-6xl max-w-xl font-serif"><span className='underline decoration-black decoration-4'>Medium</span> is a place to write, read, and connect</h1>
-    <h2>It's easy and free to post and thinking on any topic and connect with millions of readers.</h2>
-    </div>
-    <img className="hidden md:inline-flex h-32 lg:h-full" src="https://accountabilitylab.org/wp-content/uploads/2020/03/Medium-logo.png" alt="large M" />
-    </div>
+      <div className="flex justify-between items-center bg-yellow-400 border-y border-black py-10 lg:py-0">
+        <div className="px-10 space-y-5">
+          <h1 className="text-6xl max-w-xl font-serif">
+            <span className="underline decoration-black decoration-4">
+              Medium
+            </span>{" "}
+            is a place to write, read, and connect
+          </h1>
+          <h2>
+            It's easy and free to post and thinking on any topic and connect
+            with millions of readers.
+          </h2>
+        </div>
+        <img
+          className="hidden md:inline-flex h-32 lg:h-full"
+          src="https://accountabilitylab.org/wp-content/uploads/2020/03/Medium-logo.png"
+          alt="large M"
+        />
+      </div>
 
-
+      {/* Posts */}
+      <div className="grid gird-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-3 md:gap-6 p-2 md:p-6">
+        {posts && posts.map((post) => (
+          <Link href={"/" + post.slug} key={post._id} >
+            <div className="sm">
+              <img src={urlFor(post.mainImage).url()!} alt={post.title} />
+            </div>
+            <div className="flex justify-between p-5 bg-white">
+              <p>{post.title}</p>
+              <p>{post.description} by {post.author.name}</p>
+            </div>
+            <div>
+              <img className="h-12 w-12 rounded-full" src={urlFor(post.author.image).url()!} alt={post.author.name} />
+            </div>
+          </Link>
+        ))}
+      </div>
     </div>
-  )
+  );
 }
-
-
 
 export const getServerSideProps = async () => {
   const query = `*[_type == "post"]{ 
@@ -60,13 +71,13 @@ export const getServerSideProps = async () => {
     mainImage,
     slug
     }`;
-    const posts = await sanityClient.fetch(query);
+  const posts = await sanityClient.fetch(query);
 
-    //works through props to get this info into my component
+  //works through props to get this info into my component
 
-    return {
-      props: {
-          posts,
-      }
-    }
+  return {
+    props: {
+      posts,
+    },
+  };
 };
