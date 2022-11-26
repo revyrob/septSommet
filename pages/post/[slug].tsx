@@ -5,13 +5,40 @@ import { GetStaticProps } from "next";
 import PortableText from "react-portable-text";
 import {useForm, SubmitHandler} from "react-hook-form";
 
+interface IFormInput {
+  _id: string;
+  name: string;
+  email: string;
+  comment: string;
+}
+
 interface Props {
   post: Post;
 }
 
 //this shows each post on its own page
 function Post({ post }: Props) {
-  const {register, handleSubmit, formState: {errors}} = useForm(); 
+  const {
+    register, 
+    handleSubmit, 
+    formState: {errors},
+  } = useForm<IFormInput>(); 
+  
+  //when there is an onsubmit use the react-hook form to connect the comment form 
+  //this is of type submithandler
+  //it knows what to accept.
+  //it will know the data filter from my form using the IFormInput
+  const onSubmit: SubmitHandler<IFormInput> = async(data) => {
+    await fetch('/api/createComment', {
+      method: "POST",
+      body: JSON.stringify(data),
+    }).then(() => {
+      console.log(data)
+    }).catch((err) => {
+      console.log(err);
+    })
+  };
+
   //the serializer gives a defination to what the rich text will do when it comes across h1, img, etc
   return (
     <main>
@@ -54,22 +81,37 @@ function Post({ post }: Props) {
 
       <hr className="max-w-lg my-5 mx-auto border border-yellow-500"></hr>
 
-      <form className="flex flex-col p-5 max-w-2xl mx-auto mb-10 ">
+      <form onSubmit={handleSubmit(onSubmit)} className="flex flex-col p-5 max-w-2xl mx-auto mb-10 ">
         <h3 className="text-sm text-yellow-500">Enjoy this article</h3>
         <h4 className="text-3xl font-bold">Leave a comment below!</h4>
         <hr className="py-3 mt-2"></hr>
+        {/* spreads out the registation and lets us pull the data at once */}
+        <input {...register("_id")} type="hidden" name="_id" value={post._id}/>
         <label className="block mb-5">
           <span className="text-gray-700">Name</span>
-          <input className="shadow border rounded py-2 px-3 form-input mt-1 block w-full ring-yellow-500 outline-none focus:ring-1" placeholder="Name" type="text" />
+          <input   {...register("name", {required:true})} 
+           className="shadow border rounded py-2 px-3 form-input mt-1 block w-full ring-yellow-500 outline-none focus:ring-1" placeholder="Name" type="text" />
         </label>
         <label className="block mb-5">
           <span className="text-gray-700">Email</span>
-          <input className="shadow border rounded py-2 px-3 form-input mt-1 block w-full ring-yellow-500 outline-none focus:ring-1" placeholder="Email" type="text" />
+          <input  {...register("email", {required:true})} 
+          className="shadow border rounded py-2 px-3 form-input mt-1 block w-full ring-yellow-500 outline-none focus:ring-1" placeholder="Email" type="text" />
         </label>
         <label className="block mb-5">
           <span className="text-gray-700">Comment</span>
-          <textarea className="shadow border rounded py-2 px-3 form-textarea mt-1 block w-full ring-yellow-500 outline-none focus:ring-1" placeholder="Comment" rows={8} />
+          <textarea 
+          {...register("comment", {required:true})} 
+          className="shadow border rounded py-2 px-3 form-textarea mt-1 block w-full ring-yellow-500 outline-none focus:ring-1" 
+          placeholder="Comment" 
+          rows={8} />
         </label>
+        {/* errors will return when validation fails */}
+        <div className="flex flex-col p-5">
+          {errors.name && (<span className="text-red-500">-The Name Field is required.</span>)}
+          {errors.email && (<span className="text-red-500">-The Email Field is required.</span>)}
+          {errors.comment && (<span className="text-red-500">-The Comment Field is required.</span>)}
+        </div>
+        <input type="submit" className="shadow bg-yellow-500 hover:bg-yellow-400 focus:shadow-outline focus:outline-none text-white font-bold py-2 px-4 rounded cursor-pointer"/>
       </form>
     </main>
   );
