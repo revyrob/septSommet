@@ -22,7 +22,6 @@ function Post({ post }: Props) {
   //state for submission of comment
   const [submitted, setSubmitted] = useState(false);
 
-  console.log(post.comments);
   const {
     register,
     handleSubmit,
@@ -167,7 +166,7 @@ function Post({ post }: Props) {
         {post.comments?.map((comment) => (
           <div key={comment._id}>
             <p>
-              <span className="text-yellow-500">{comment.name}:</span>{comment.comment}
+              <span className="text-yellow-500">{comment.name}: </span>{comment.comment}
             </p>
           </div>
         ))}
