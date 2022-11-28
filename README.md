@@ -10,9 +10,10 @@ in the posts
 
 ## Start it up!!
 
-Main saity folder
+Main saity folder: npm run dev
 
-npm run dev
+Within the studio folder: npx @sanity/cli start
 
-Within the studio folder
-npx @sanity/cli start
+
+## Check out deployed site on Netlify
+https://medium-blog-mock.netlify.app/
