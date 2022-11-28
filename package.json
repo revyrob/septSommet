@@ -6,6 +6,7 @@
     "start": "next start"
   },
   "dependencies": {
+    "@sanity/client": "^3.4.1",
     "@sanity/image-url": "^1.0.1",
     "next": "latest",
     "next-sanity": "^1.0.9",
