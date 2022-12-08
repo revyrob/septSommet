@@ -3,6 +3,9 @@ import Header from "../components/Header";
 import Link from "next/link";
 import { sanityClient, urlFor } from "../sanity.js";
 import { Post } from "../typings";
+import rossland from '../assets/images/rossland.jpg';
+import logoRossland from '../assets/images/logoRoss.png';
+
 
 interface Props {
   posts: [Post];
@@ -12,28 +15,27 @@ export default function Home({ posts }: Props) {
   return (
     <div className="max-w-7xl mx-auto">
       <Head>
-        <title>Medium Blog</title>
+        <title>Ecole des Septs-Sommets</title>
         <link rel="icon" href="/favicon.ico" />
       </Head>
       <Header />
 
-      <div className="flex justify-between items-center bg-yellow-400 border-y border-black py-10 lg:py-0">
+      <div className="flex justify-around items-center bg-blue-800 border-y border-black py-10 lg:py-0">
         <div className="px-10 space-y-5">
-          <h1 className="text-6xl max-w-xl font-serif">
-            <span className="underline decoration-black decoration-4">
-              Medium
-            </span>{" "}
-            is a place to write, read, and connect
+          <h1 className="text-4xl max-w-xl font-sans-serif uppercase p-7 text-white">
+            {/* <span className=" decoration-black decoration-4"> */}
+            Ecole des Septs-Sommets
+            {/* </span>{" "}
+            Je apprends en Francais */}
           </h1>
-          <h2>
-            It's easy and free to post and thinking on any topic and connect
-            with millions of readers.
+          <h2 className="p-5 text-white">
+          Je apprends en Francais
           </h2>
         </div>
         <img
-          className="hidden md:inline-flex h-32 lg:h-full"
-          src="https://accountabilitylab.org/wp-content/uploads/2020/03/Medium-logo.png"
-          alt="large M"
+          className="hidden md:flex flex-col h-96 lg:h-96 p-5 border-white py-10 lg:py-0"
+          src={rossland.src}
+          alt="sept sommet logo rossland"
         />
       </div>
 
