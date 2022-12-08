@@ -20,7 +20,7 @@ function Header() {
             <h3>Home</h3>
           </Link>
 
-          <Link href=" https://septsommets.csf.bc.ca/contactez-nous/">
+          <Link href="https://septsommets.csf.bc.ca/contactez-nous/">
             <h3 className="text-white bg-blue-600 px-4 py-1 rounded-full">
               Contact
             </h3>
