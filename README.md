@@ -22,3 +22,6 @@ Within the studio folder: npx @sanity/cli start
 
 ## Check out deployed site on Netlify
 https://medium-blog-mock.netlify.app/
+
+## Demo
+https://www.loom.com/share/a466ec45766247deaa10e063d6eaa8ce
