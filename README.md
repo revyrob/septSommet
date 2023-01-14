@@ -3,7 +3,7 @@ Commuication with parents and the school can be overwhelming.  Here is a trial f
 
 
 ## 🚀 Demo
-https://medium-blog-mock.netlify.app/
+https://sept-sommet-blog.netlify.app
 
 
 ## 📹 Demo Video
