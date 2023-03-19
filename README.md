@@ -1,8 +1,8 @@
 # School Blog Site
-Commuication with parents and the school can be overwhelming.  Here is a trial for my kids' school to see if this blog commuincation site decreases the burden from school administration and gives a central spot for parents to find information.  
+Commuication with parents and the school can be overwhelming.  Here is a trial for my kids' school to see if this blog commuincation site decreases the burden from school administration and gives a central spot for parents to find information.  I built this frontend application with NextJS, Typescript, Sanity, and Tailwind. 
 
 
-## 🚀 Demo
+## 🚀 Deployed Site
 https://sept-sommet-blog.netlify.app
 
 
